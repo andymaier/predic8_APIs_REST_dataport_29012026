@@ -2,6 +2,11 @@ openapi: '3.0.3'
 info:
   title: Katalog API
   version: '1.0'
+  contact:
+    email: test@test.com
+    name: Otto Franz
+    url: irgendwas.com
+  description: Eine tolle API
 servers:
   - url: http://localhost:50001
 paths:  
