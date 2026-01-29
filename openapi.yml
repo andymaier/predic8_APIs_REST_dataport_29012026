@@ -1,0 +1,87 @@
+openapi: '3.0.3'
+info:
+  title: Katalog API
+  version: '1.0'
+servers:
+  - url: http://localhost:50001
+paths:  
+  /articles:
+      get:
+        tags:
+          - Shop
+        summary: Gebe alle Artikel zurück
+        description: Es werden alle Artikel zurückgegeben
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ArtikelResponse'
+      post:
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtikelRequest'
+        tags:
+          - Shop
+        summary: Erstelle einen Artikel
+        description: Ein Artikel wird erstellt.
+        responses:
+          '201':
+            description: Created
+            content:
+              application/json:
+                schema:                  
+                  $ref: '#/components/schemas/ArtikelResponse'
+    
+
+components:
+  schemas:
+    ArtikelRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 36
+          format: uuid
+          example: '407e197f-0e00-4b1b-942b-c4ad25c13c94'
+        name:
+          type: string
+          maxLength: 100
+          example: 'Grapefruit'
+          description: Das ist die Bezeichnung eines Artikels.
+        preis:
+          type: number
+          minimum: 0
+          example: 3.99
+          description: Der Preis des Artikels.
+      required:        
+        - name
+        - preis
+    ArtikelResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 36
+          format: uuid
+          example: '407e197f-0e00-4b1b-942b-c4ad25c13c94'
+        name:
+          type: string
+          maxLength: 100
+          example: 'Grapefruit'
+          description: Das ist die Bezeichnung eines Artikels.
+        preis:
+          type: number
+          minimum: 0
+          example: 3.99
+          description: Der Preis des Artikels.
+      required:
+        - id    
+        - name
+        - preis
+
