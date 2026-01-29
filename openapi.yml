@@ -29,15 +29,84 @@ paths:
         tags:
           - Shop
         summary: Erstelle einen Artikel
-        description: Ein Artikel wird erstellt.
+        description: | 
+          # Ein *Artikel* wird erstellt.
+
+          ## Ein Artikel besteht aus den Feldern:
+              - name
+              - preis
+
+          Inline-style: 
+          ![alt text](https://kinsta.com/wp-content/uploads/2022/09/rest.png "Logo Title Text 1")
+
+          | Tables        | Are           | PUT  |
+          | ------------- |:-------------:| -----:|
+          | /articles/id     | right-aligned | Objekt wird ersetzt |
+          | col 2 is      | centered      |   $12 |
+          | zebra stripes | are neat      |    $1 |
+
         responses:
           '201':
             description: Created
+            headers:
+              Location:
+                description: URI des neuen Artikels
+                schema:
+                  type: string
+                  maxLength: 500
+                  format: uri
+                  example: '407e197f-0e00-4b1b-942b-c4ad25c13c94'
             content:
               application/json:
                 schema:                  
                   $ref: '#/components/schemas/ArtikelResponse'
-    
+  /articles/{aid}:
+    parameters:
+      - in: path
+        name: aid        
+        schema:
+          type: string
+        required: true
+    get:
+      tags:
+        - Shop
+        - Article Details
+      summary: Gebe einen Artikel zurück
+      description: Es wird ein Artikel zurückgegeben
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:                 
+                $ref: '#/components/schemas/ArtikelResponse'
+    put:
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtikelRequest'
+      tags:
+        - Shop
+        - Article Details
+      summary: Ersetze einen Artikel 
+      description: Ein Artikel wird ersetzt
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:                 
+                $ref: '#/components/schemas/ArtikelResponse'
+    delete:
+      tags:
+        - Shop
+        - Article Details
+      summary: Ein Artikel wird gelöscht
+      description: Es wird ein Artikel gelöscht
+      responses:
+        '200':
+          description: OK
 
 components:
   schemas:
